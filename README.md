@@ -1,41 +1,75 @@
-# PDF Question Answering with RAG
+# RAG for Document Question Answering
 
-This project implements a Retrieval Augmented Generation (RAG) system to answer questions based on the content of a PDF document.
+This repository contains the implementation of a Retrieval Augmented Generation (RAG) system for Question Answering on documents. The system allows users to upload a PDF or text file, ask questions about the content, and receive relevant answers extracted from the document.
 
-## Features
-- Uploads PDF or plain text files
-- Answers questions about the content of the uploaded file
-- Provides source information for the answers
+## Project Structure
 
-## Getting Started
+The project is organized into two Jupyter Notebook files:
 
-### Prerequisites
-- Python 3.7+
-- GPU (recommended for faster response times)
+1. `RAG_Without_UI.ipynb`: Implements the core RAG functionality without a user interface.
+2. `RAG_With_ChatUI.ipynb`: Integrates the RAG system with a chat-based user interface using the Chainlit library.
 
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Phatban/PDF-QA-With-RAG.git
-2. Install the required dependencies:
-   ```bash
-   cd PDF-QA-With-RAG
-   pip install -r requirements.txt
-### Usage
-1. Run the Chainlit app:
-   ```bash
-   chainlit run app.py --host 0.0.0.0 --port 8000
-2. Open the app in your browser by visiting the URL provided in the console.
-3. Upload a PDF or text file, then ask questions about its content.
+## RAG System Overview
 
-## Architecture
-The system is composed of the following components:
+The RAG system follows these main steps:
 
-1. **File Processing**: Handles the loading and splitting of the input file into smaller documents.
-2. **Vector Database**: Creates and manages the Chroma vector database for efficient retrieval of relevant documents.
-3. **Language Model**: Loads and configures the Vicuna language model for generating answers.
-4. **RAG System**: Integrates the vector database and language model to provide the final question-answering functionality.
-5. **Chainlit App**: Provides the web-based user interface for interacting with the system.
+1. Document Processing:
+   - The input document (PDF or text) is loaded and split into smaller chunks using a text splitter.
+   - Each chunk is considered as a separate document in the database.
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+2. Vectorization:
+   - The text documents are converted into vector representations using an embedding model.
+   - This allows for efficient similarity search and retrieval.
+
+3. Vector Database:
+   - The vectorized documents are stored in a vector database (Chroma) for fast retrieval.
+   - The database is used to find the most relevant documents based on the user's question.
+
+4. Large Language Model (LLM):
+   - The Vicuna model is used as the LLM for generating answers.
+   - The model is loaded and configured to run efficiently on the available hardware.
+
+5. Question Answering:
+   - The user inputs a question related to the document.
+   - The system retrieves the most relevant documents from the vector database.
+   - The retrieved documents, along with the question, are passed to the LLM.
+   - The LLM generates an answer based on the provided context.
+
+## Usage
+
+### RAG Without UI
+
+1. Open the `RAG_Without_UI.ipynb` notebook in Jupyter.
+2. Install the required dependencies as mentioned in the notebook.
+3. Run the notebook cells in sequential order.
+4. When prompted, provide the path to your PDF or text file.
+5. Enter a question related to the document.
+6. The system will generate an answer based on the relevant content from the document.
+
+### RAG With Chat UI
+
+1. Open the `RAG_With_ChatUI.ipynb` notebook in Jupyter.
+2. Install the required dependencies, including the Chainlit library.
+3. Run the notebook cells in sequential order.
+4. The notebook will provide a URL for accessing the chat interface.
+5. Open the URL in a web browser.
+6. Upload a PDF or text file using the chat interface.
+7. Ask questions related to the uploaded document.
+8. The system will generate answers and display them in the chat interface.
+
+## Dependencies
+
+The project requires the following main dependencies:
+
+- Python 3.x
+- PyTorch
+- Transformers
+- LangChain
+- Chroma
+- Chainlit (for the chat UI)
+
+Please refer to the notebooks for the complete list of dependencies and installation instructions.
+
+## Acknowledgements
+
+This project was developed as part of the AI Vietnam (AIO2024) course. It utilizes various open-source libraries and models, including Vicuna, LangChain, and Chainlit. We extend our gratitude to the developers and contributors of these projects.
